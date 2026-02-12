@@ -19,7 +19,7 @@ use Encode;
 use HTTP::Date;
 use HTTP::Status qw(status_message :constants);
 use HTML::Entities qw(encode_entities);
-use Socket qw(:crlf);
+use Socket qw(:DEFAULT :crlf);
 
 use Plack::App::Directory;
 use Plack::MIME;
@@ -474,6 +474,15 @@ my $app = builder {
 };
 
 unless (caller) {
+    require Getopt::Long;
+    Getopt::Long::Configure(qw(gnu_compat pass_through));
+    Getopt::Long::GetOptions(
+        # -b is what I'm used to for python's http.server :,)
+        'b|o|host=s' => \my $host,
+    );
+    # For some reason :DEFAULT does not export inet_ntop? :^(
+    $host //= Socket::inet_ntop(AF_INET, INADDR_LOOPBACK);
+    unshift @ARGV, "--host", $host;
     require Plack::Runner;
     my $plackup;
     $plackup = Plack::Runner->new;
