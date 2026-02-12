@@ -530,6 +530,8 @@ unless (caller) {
     $plackup = Plack::Runner->new;
     $plackup->parse_options(@ARGV);
     $plackup->run($app);
+} else {
+    return $app;
 }
 
 # set vi: ai et sts=4 sw=4:
