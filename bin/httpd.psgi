@@ -287,7 +287,7 @@ sub file_response ($env, $fh)
             return [ HTTP_NOT_MODIFIED, [], [] ];
         }
     }
-    
+
     if (exists $env->{"HTTP_RANGE"}) {
         (my $range = $env->{"HTTP_RANGE"})
         # HTTP/1.1 (RFC9110): The only legal range-unit is "bytes".
