@@ -517,6 +517,7 @@ ABYSS:
 use Plack::Builder;
 my $app = builder {
     enable "Head";
+    enable "Lint";
     enable \&NoNo_NastyPath;
     \&main;
 };
