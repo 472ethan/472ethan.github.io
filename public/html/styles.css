@@ -18,17 +18,20 @@
     color-scheme: light dark;
 }
 
-body {
-    font-family: /* https://int10h.org/oldschool-pc-fonts/ */
-        "PxPlus IBM VGA 9x16", "Px437 IBM VGA 9x16",
-        "Fixedsys", "Courier New", "Courier", monospace;
-}
-
+/* Color scheme */
 @media (prefers-color-scheme: dark) {
     html, body {
         background-color: #222;
         color: #bbb;
     }
+
+    strong, h1, h2, h3 {
+        color: #fff;
+        font-weight: normal;
+    }
+
+    a { color: #fc0; }
+    a:visited { color: #f60; }
 }
 
 @media (prefers-color-scheme: light) {
@@ -36,4 +39,68 @@ body {
         background-color: #fff;
         color: #111;
     }
+}
+
+body, pre, code {
+    font-family: /* https://int10h.org/oldschool-pc-fonts/ */
+        "PxPlus IBM VGA 9x16", "Px437 IBM VGA 9x16",
+        "Fixedsys", "Courier New", "Courier", monospace;
+    margin: 1em;
+}
+
+.navbar {
+
+    .crumb a:visited {
+        color: inherit;
+    }
+
+    .crumb.active a {
+        color: inherit;
+        text-decoration: none;  /* NO underscore */
+        cursor: default;
+        pointer-events: none;
+    }
+}
+
+main {
+    margin: 0 auto;
+    width: 76ch;
+}
+
+pre.epigram {
+    background-color: #333;
+    padding: 1.2em 2.5em;
+    /* Counter-act _reboot.scss */
+    line-height: 1.2;
+    /*font-size: 1rem; --> Actually this is fine */
+}
+
+figure {
+    /* Counter-act _reboot.scss again */
+    margin: 2em 0;
+}
+
+figure > img {
+    display: block;
+    width: 40%;
+    height: auto;
+    /* Without height:auto, the following would be
+     * necessary (though that fits, not shrinks) */
+    /* object-fit: contain; */
+    margin: 1em auto;
+}
+
+figure > figcaption {
+    text-align: center;
+    width: 40ch;
+    /* Okay, I may be a hypocrite -- BUT... */
+    /* (actually I'm fine; i was looking at margin
+     * collapse, but now i realize they don't look
+     * so good so close together now that the navbar
+     * is moved to the top. */
+    margin: 1em auto;
+}
+
+.rule {
+    text-align: center;
 }
