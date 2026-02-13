@@ -51,6 +51,10 @@ body, pre, code {
     font-family: /* https://int10h.org/oldschool-pc-fonts/ */
         "PxPlus IBM VGA 9x16", "Px437 IBM VGA 9x16",
         "Fixedsys", "Courier New", "Courier", monospace;
+}
+
+/* Code is inline -- we cannot add margin to it!!! */
+body, pre {
     margin: 1em;
 }
 
@@ -103,12 +107,17 @@ figure {
 
     img {
         display: block;
-        width: 12rem;
         height: auto;
         /* Without height:auto, the following would be
-         * necessary (though that fits, not shrinks) */
+         * necessary (though that fits, not shrinks)
+         *
+         * anyway uh WE NEED HEIGHT AUTO VERY BADLY!!! */
         /* object-fit: contain; */
         margin: 1em auto;
+    }
+
+    img.dinky {
+        width: 12rem;
     }
 
     figcaption {

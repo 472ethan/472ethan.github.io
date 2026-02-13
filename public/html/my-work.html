@@ -21,7 +21,95 @@
     <main>
         <section class="m-3">
             <h1>My Work</h1>
-            <p>WA WA WAAAAAAA</p>
+
+<h2>Freedom! (an h2)</h2>
+
+<p>I generally have an irresistible attraction to free software. Unix, GNU, KDE... just to name a few.</p>
+
+<h3>An example of just that (this is an h3)</h3>
+
+<p>I've written a very long guide for CS students on how to send and receive emails at the Wiscmail address (<code>@wisc.edu</code>), which (at least for as long as I've been enrolled) has been living on a Microsoft Outlook server.</p>
+
+<p>It was in fact more specifically dedicated to someone whom I'd met at CS252, who told me he'd be interested in learning how I sent emails in the terminal. I told him that Outlook the <em>client</em> is different from Outlook the <em>server</em>. Apparently, not many people knew that!</p>
+
+<figure><a href="https://www.endfindme.com/memo/mail/auth/xoauth2/"><img src="dilly-dally/ms365_ed_on_LYNX.png" width="1370" height="823" alt="Screenshot of my web page explaining how to use XOAUTH2 with Wiscmail. Wrote it for a classmate at CS252 and CS354. Contains text: What is XOAUTH2?
+
+Here is a very personal take that um... you should just take with a grain of salt alright. I have no idea what this thing is either, or what it is doing that Access Tokens don't already. Previously I mentioned this excerpt from Wikipedia which is an interesting take since it actually links to our uni's page (square brackets are my addition):
+
+Microsoft has announced that they would end support for the less secure basic authentication[...] which disables most use of IMAP or POP3 [that includes SMTP.] and requires significant upgrades to support the more secure OAuth2 based authentication in applications in order to continue to use those protocols;[23] some customers have responded by simply shutting off older protocols[24].
+
+Either way..."></a></figure>
+
+<p>Said excerpt is from the Wikipedia article titled <a href="https://en.wikipedia.org/wiki/Embrace,_extend,_and_extinguish#Email_protocols">Embrace, Extend, and Extinguish</a> (section "Email protocols"). To call Microsoft's move to deprecate SASL PLAIN is a bit of a far fetch, in my opinion, since it is an authentication <em>mechanism</em> that, technically, still runs on the same <em>protocol</em> (SMTP); and OAuth 2.0 is an open standard published to <a href="https://www.rfc-editor.org/rfc/rfc6749.html">RFC</a> (though, in concession, the SASL mechanism utilitizing OAuth 2.0 -- XOAUTH2 -- is popularized by mainstream mail providers such as <a href="https://developers.google.com/workspace/gmail/imap/xoauth2-protocol#the_sasl_xoauth2_mechanism">Google</a> and <a href="https://learn.microsoft.com/en-us/exchange/client-developer/legacy-protocols/how-to-authenticate-an-imap-pop-smtp-application-by-using-oauth#sasl-xoauth2">Microsoft</a>.)</p>
+
+<p>The point nonetheless stands that Microsoft has been observed taking steps to restrict our ability to interoperate with their services in a more or less independent way, and I think knowledge of open network protocols, open information formats, can help fight back their ability to trap users in their proprietary ecosystem -- at least.</p>
+
+<p>Oh and, I personally find the Outlook HTML repulsive: paragraphs consisting of <code>&lt;div&gt;</code>'s, riddled with unceasing inline-CSS style -- I'd have to skip 100-or-so characters to even begin to read the first word! They also <a href="https://mailformat.dan.info/quoting/top-posting.html">top post</a> but that's the lesser part of my concern now. I just wish that at the very least CS students wrote emails in plain text -- and for those that do (or probably don't yet but will soon found that they love plain text more than they knew), I wanted to provide an easy guide to do just that. :^)</p>
+
+<p>The guide is at <a href="https://www.endfindme.com/memo/mail/">/memo/mail/</a> on my website. (Trailing slash is important because I am picky with routing :P)</p>
+
+<h2>Drawing? (another h2)</h2>
+
+<p>Oh yeah, I did <a href="https://cs272-wordpress.cs.wisc.edu/s26/meng69-site/" data-type="page" data-id="7">mention</a> that...</p>
+
+<p>You can download the GIF <a href="dinkyethan.gif">here</a>? (Or just, y'know, right-click on the image, then click on something like "Open Image in New Tab".)</p>
+
+<p>I had to do <a href="https://legacy.imagemagick.org/Usage/anim_basics/">weird things</a> to add the black background of the raw PNG frames with IMv7, don't pay too much attention to it...</p>
+
+<pre class="wp-block-code"><code>magick \
+	-delay 100 -size 180x240 +antialias \
+	\( xc:#000 dinkyethan-1.png -composite \) \
+	\( xc:#000 dinkyethan-2.png -composite \) \
+	-loop 0 -scale 400% dinkyethan.gif</code></pre>
+
+<p>Also I can't get my browser (Firefox) to <em>not</em> antialias it so I scaled it up <s>three</s> fourfold (180x240 -&gt; 720x960), ouch...</p>
+
+<p>I ripped it off of <a href="https://deadlycomics.com/">DeadlyComics</a> and <a href="https://jaquin.net/">Jaquin</a>. I strive to make my website half as cool as theirs.</p>
+
+<h2>Columns</h2>
+
+<!-- wp:columns {"verticalAlignment":"top"} -->
+<div class="d-flex flex-row flex-wrap flex-md-nowrap"><!-- wp:column {"verticalAlignment":"top"} -->
+<div class="col-12 col-md-6"><!-- wp:code (flex-basis:1/2 on non-mobile devices) -->
+<pre><code>CLIENT (request)
+&gt; GET / HTTP/1.1
+&gt; Host: www.endfindme.com
+&gt; User-Agent: curl/8.18.0
+&gt; Accept: */*
+&gt; Connection: close
+&gt;
+</code></pre>
+<!-- /wp:code -->
+
+<p>At this point, the MIME headers are terminated by a double <code>&lt;CR&gt;&lt;LF&gt;</code> sequence, and the request body begins.</p>
+
+<p>Typically, a HEAD/GET/DELETE request does not have a body, while a POST/PUT/PATCH request does. Because this is a GET request, the request terminates here. (The server will often assume you're done from here, anyways.)</p>
+</div>
+
+<!-- wp:column {"verticalAlignment":"top"} -->
+<div class="col-12 col-md-6"><!-- wp:code (flex-basis:1/2 on non-mobile devices) -->
+<pre><code>SERVER (response)
+&lt; HTTP/1.1 200 OK
+&lt; Server: nginx/1.24.0 (Ubuntu)
+&lt; Date: Wed, 04 Feb 2026 06:50:43 GMT
+&lt; Content-Type: text/html; charset="utf-8"
+&lt; Transfer-Encoding: chunked
+&lt; Connection: close
+&lt; Content-Security-Policy: default-src 'self'
+&lt; Etag: W/"693b3ef5-c3e"
+&lt; Last-Modified: Thu, 11 Dec 2025 22:00:21 GMT
+&lt; Referrer-Policy: origin
+&lt; Strict-Transport-Security: max-age=15552000
+&lt;
+&lt; &lt;!DOCTYPE html&gt;
+&lt; &#91;...]</code></pre>
+<!-- /wp:code --></div>
+<!-- /wp:column --></div>
+<!-- /wp:columns -->
+
+<p>I remember throwing in the Referrer-Policy because I don't want people clicking on links reveal what path they were on... (and I got tired of writing <code>rel="noreferrer</code>" after a while, so :]).</p>
+
+<!--<p>(wait "columns" are just flexboxes? why'd no one tell me that? I would have said something different.... &gt;:c)</p>-->
         </section>
     </main>
 
