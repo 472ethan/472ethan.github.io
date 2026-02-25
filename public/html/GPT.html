@@ -343,6 +343,32 @@ if (x === y) {
 EOF
 A
 C</code></pre>
+    </blockquote>
+    <p><strong>[COMMENT]</strong> Perl is similarly type-agnostic
+    (type-<strong>magical</strong>?) so much so that numbers/strings/booleans
+    are just collectively SCALARs, though the operators are typed (c.f. the
+    numeric <code>==</code> vs.  the stringwise <code>eq</code>, e.g.
+    <code>0+</code> and <code>!!</code> and <code>"@{[...]}"</code>) which
+    is how you, through setting off the specific implicit conversions
+    associated with the operation, exhibit "types" out of this data.
+    Kind of like unsigned-signed or IEEE-float-to-signed (Quake 3 inverse sqrt
+    anyone?) type of casting (but with way more magic -- obviously.)</p>
+    <p>In hindsight however I think it <em>is</em> called coercion in
+    JS, like Java and C; it's actually confusing the opposite way because Perl
+    calls it conversion not coercion (at least in <strong>perlop</strong>?)
+    But that might as well be nitpicking, oh well. <strong>[/COMMENT]</strong></p>
+    <p>(and yes, I am well-aware that JavaScript's eccentric coercion rules
+    are <a href="https://wtfjs.com/wtfs/2010-02-15-careful" title="Or hated,
+should i say.  (That was clearly sarcasm ;)">one of the most "beloved"
+    things about it</a>.  but i am more or less tolerant towards it coming
+    from Perl which is <a href="https://www.perlmonks.org/?node_id=290607"
+    title="Notorious, so to speak... people often call Perl a read-only
+language, while I'm sitting here thinking how the flip did someone
+these JAPH scripts... (and double as ASCII art!?)  should they even
+call themselves a programmer or an artist....">equally "renowned" for its obfuscated code</a>...
+    I don't know, but i get how it isn't anything you want to have to
+    deal with at work.)</p>
+    <blockquote class="flathead">
 <p>Q3: false on the first conditional, and true on the second; so prints
 "Please log in"</p>
 <pre><code>$ cat &lt;&lt;\EOF | node
@@ -364,6 +390,28 @@ Please log in</code></pre>
 <pre><code>$ node --version
 v22.21.1</code></pre>
     </blockquote>
+    <p><strong>[COMMENT]</strong> ... that was meant for the big codeblock until I split
+    it and now it makes no sense.  (Okay logically, I <em>did</em> write
+    all the code check <em>after</em> answering -- if that makes it any
+    less confusing.)</p>
+    <p>Surprisingly enough from skimming a few other people's examples,
+    shockingly they all had something to do with authentication, and
+    criterion for access to internal resources... it's interesting, to
+    say the least. :v</p>
+    <p>And yeah while the examples for certain AIs were like um, bad --
+    like once I saw there was a boolean for logged in and a boolean for
+    isAdmin, and for some miraculous reason, isAdmin is true but logged
+    in is false.  And then there is a conditional, checking if isLoggedIn
+    or isAdmin.  I'm like WHAT IS THAT SUPPOSED TO MEAN LOL XD</p>
+    <p>But this... admittedly isn't so bad.  It's actually quite consistent
+    with, say, Django's <a href="https://stackoverflow.com/a/3644910/19411800"
+    >request<wbr>.user<wbr>.is_<wbr>authenticated</a>.  And I like how it
+    doesn't try to BS its way out with the other two states (user set but
+    not logged in?  Logged in but no user set?  The former could be anonymous
+    login...  but the latter is just nonsense, like what even is the point
+    of logging in if you can't identify the user... lol) <strong>[/COMMENT]</strong></p>
+    <p>(This is not a compliment of AI by any means; it's just... this
+    one is <em>relatively</em> more bearable.)</p>
 
     <p class="tagline"><em>GPT-5.2</em></p>
     <blockquote class="flathead">

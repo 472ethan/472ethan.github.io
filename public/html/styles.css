@@ -1,5 +1,4 @@
 @charset "UTF-8";
-
 /*# vi: set ai et sts=4 sw=4: #####################**
  +/&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\+
  *|                                                |*
@@ -199,13 +198,7 @@ ul.navbar-nav {
 
 p.tagline {  /* GNU Lilypond calls it so :v */
     /*font-weight: bold;*/ /* Not good. */
-
     margin-bottom: 0;
-
-    /* <em> exists purely for Lynx; no style implications for GUI browsers. */
-    em {
-        font-style: inherit;
-    }
 }
 
 /* Hack to contain the margins??? */
@@ -271,9 +264,12 @@ blockquote.flathead {
     a { color: #fc0; }
     a:visited { color: #f60; }
 
-    p.tagline {
+    /* <em> exists purely for Lynx; no style implications for
+     * GUI browsers.  (Unless you use light mode, in which case
+     * i am too lazy to pick a color for italic. :) */
+    em {
         color: #0aa;  /* setaf 6 */
-        font-weight: normal;
+        font-style: inherit;
     }
 
     blockquote.flathead pre {
