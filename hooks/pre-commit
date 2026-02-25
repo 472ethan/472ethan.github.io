@@ -22,7 +22,7 @@ no_unless_yes () {
 			exit 255
 		fi
 		printf >&2 "%s [y/N] " "$prompt"
-		read -u 3 -r input
+		read <&3 -r input
 		expr "$input" : '^y\|Y' >/dev/null || exit $code
 		# XXX: Leave fd 3 open?
 	)
