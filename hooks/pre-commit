@@ -4,11 +4,28 @@
 #
 
 no_unless_yes () {
-	test -t 0 && test -t 1 || exit $code
 	local input= code=$1 prompt=$2
-	printf >&2 "%s [y/N] " "$prompt"
-	read -r input
-	expr "$input" : '^y\|Y' >/dev/null || exit $code
+	(
+		# Personally, if STDERR is swallowed whole,
+		# I wouldn't try talking to the terminal...
+		#
+		# Not that the following would be impossible,
+		# but I'd be annoyed if my terminal hangs in-
+		# definitely without a prompt in sight. :,]
+		test -t 2 || exit $code
+		if test -t 0; then
+			exec 3<&0
+		elif (exec </dev/tty) 2>/dev/null; then  # CAN I HAZ TTY???
+			exec 3</dev/tty
+		else
+			echo >&2 You do not have a TTY, forsaken child. Goodbye.
+			exit 255
+		fi
+		printf >&2 "%s [y/N] " "$prompt"
+		read -u 3 -r input
+		expr "$input" : '^y\|Y' >/dev/null || exit $code
+		# XXX: Leave fd 3 open?
+	)
 }
 
 ride_or_die () {
