@@ -185,6 +185,18 @@ ul {
     }
 }
 
+/* Ack!!!! PERISH! >Xc */
+ul.navbar-nav {
+    li {
+        padding-left: inherit;
+        text-indent: inherit;
+    }
+
+    li:before {
+        content: inherit;
+    }
+}
+
 p.tagline {  /* GNU Lilypond calls it so :v */
     /*font-weight: bold;*/ /* Not good. */
 
