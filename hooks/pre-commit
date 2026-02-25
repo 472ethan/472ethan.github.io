@@ -3,6 +3,20 @@
 # This is based on the Git's pre-commit.sample.
 #
 
+no_unless_yes () {
+	test -t 0 && test -t 1 || exit $code
+	local input= code=$1 prompt=$2
+	printf >&2 "%s [y/N] " "$prompt"
+	read -r input
+	expr "$input" : '^y\|Y' >/dev/null || exit $code
+}
+
+ride_or_die () {
+	local code=$1 mesg=$2
+	printf >&2 "***** %s [code %s]\n" "$mesg" $code
+	no_unless_yes $code "Would you like to continue?"
+}
+
 # Redirect output to stderr.
 exec 1>&2
 
@@ -18,7 +32,9 @@ else
 fi
 
 # If there are whitespace errors, print the offending file names and fail.
-git diff-index --check --cached $BASE -- || true
+git diff-index --check --cached $BASE -- || {
+	ride_or_die $? "diff-index --check failed"
+}
 
 vnu_warn=0
 vnu_path=
@@ -40,15 +56,30 @@ vnu ()
 	"$vnu_path" "$@"
 }
 
+TMP=$(mktemp -d dinky-pcmit-XXXXXXXXX)
+trap 'rm -rf "$TMP"' EXIT
+
 git diff-index --cached --name-only --diff-filter=AM $BASE |
-grep ^public/html/ | grep \\\.html\$ |
+grep ^public/html/ | grep \\\.css\$\\\|\\\.html\$ | (
+bad=0
 while read -r file; do
-	if vnu "$file"; then
-		:
-	else
+	test="${file%.css}"
+	if [ x"$file" != x"$test" ]; then
+		flag='--css'
+	fi
+	vnu $flag "$file" || {
 		code=$?
 		echo >&2 "**** Nu check \"$file\" failed [code $code]"
-		exit $code
-	fi
+		bad=$(( $bad+1 ))
+	}
 	[ "$vnu_warn" -ne 1 ] || break
 done
+echo $bad > $TMP/bad; )
+
+bad=$(cat $TMP/bad)
+if [ $bad -ne 0 ]; then
+	cat <<OHNO
+**** A total of $bad Nu check$([ $bad -eq 1 ] || echo s) failed.
+OHNO
+	no_unless_yes $bad "Would you like to continue?"
+fi
