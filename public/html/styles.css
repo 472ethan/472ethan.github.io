@@ -24,8 +24,12 @@
     max-width: 100%;
 }
 
-
 /*
+ * IBM fonts are from VileR's collection:
+ * LICENSE: CC BY-SA 4.0
+ *    <https://int10h.org/oldschool-pc-fonts/download/>
+ *    <https://int10h.org/oldschool-pc-fonts/readme/#legal_stuff>
+ *
  * Tamsyn is a font made by Scott Fial.
  * Converted from pcf to bdf with pcf2bdf:
  *    <https://github.com/ganaware/pcf2bdf>
@@ -33,7 +37,7 @@
  *    <https://github.com/keidax/bdf2ttf.py>
  * then from ttf to woff using google/woff2:
  *    <https://github.com/google/woff2>
- * Tamsyn is free (... public domain?)
+ * LICENSE: Tamsyn is free (... public domain?)
  *    <https://web.archive.org/web/20240204121508/http://www.fial.com/~scott/tamsyn-font/download/tamsyn-font-1.11.tar.gz>
  */
 @font-face {
