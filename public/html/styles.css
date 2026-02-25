@@ -1,3 +1,5 @@
+@charset "UTF-8";
+
 /*# vi: set ai et sts=4 sw=4: #####################**
  +/&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\+
  *|                                                |*
@@ -11,8 +13,6 @@
  *|  ==================         ================== |*
  *|                                                |*
  *\################################################/*/
-
-@charset UTF-8;
 
 :root {
     color-scheme: light dark;
@@ -61,31 +61,17 @@
     font-style: normal;
 }
 
-/* Color scheme */
-@media (prefers-color-scheme: dark) {
-    html, body {
-        background-color: #222;
-        color: #bbb;
-    }
-
-    strong, h1, h2, h3 {
-        color: #fff;
-        font-weight: normal;
-    }
-
-    a { color: #fc0; }
-    a:visited { color: #f60; }
-}
-
-@media (prefers-color-scheme: light) {
-    html, body {
-        background-color: #fff;
-        color: #111;
-    }
+@font-face {
+    font-family: "IBM VGA 8x14";
+    src: url("Web437_IBM_VGA_8x14.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
 }
 
 body, pre, code {
-    font-family: "Tamsyn8x15", "Terminus", "Nimbus Mono", "Fixedsys", "Courier New", "Courier", monospace;
+    font-family: "Tamsyn8x15",
+        "IBM VGA 8x14",  /* Fallback for &bull; */
+        "Terminus", "Nimbus Mono", "Fixedsys", "Courier New", "Courier", monospace;
 }
 
 /* The default underscore width looks too thick */
@@ -95,9 +81,8 @@ body a, pre a, code a {
 }
 
 /* Code is inline -- we cannot add margin to it!!! */
-body, pre {
-    margin: 1em;
-}
+body { margin: 1em; }
+pre { margin: 1em 0; }
 
 p,  {
     line-height: 1.2;
@@ -120,6 +105,10 @@ p,  {
 main {
     margin: 0 auto;
     width: 76ch;
+}
+
+main.wide {
+    width: 132ch;
 }
 
 .epigram pre {
@@ -174,4 +163,112 @@ figure {
 
 .rule {
     text-align: center;
+}
+
+/*==========+
+ * GPT.html
+ *==========*/
+
+a.linklink:before { content: "<"; }
+a.linklink:after { content: ">"; }
+
+/* I'm stingy */
+ul {
+    list-style: none;
+    li {
+        padding-left: -2ex;
+        text-indent: -2ex;
+    }
+
+    li:before {
+        content: "• ";
+    }
+}
+
+p.tagline {  /* GNU Lilypond calls it so :v */
+    /*font-weight: bold;*/ /* Not good. */
+
+    margin-bottom: 0;
+
+    /* <em> exists purely for Lynx; no style implications for GUI browsers. */
+    em {
+        font-style: inherit;
+    }
+}
+
+/* Hack to contain the margins??? */
+blockquote.flathead {
+    margin-top: 0;
+    p { margin-top: 0; }
+
+    pre {
+        background-color: #ccc; /* approx. rgba AAAAAAAA */
+        overflow-x: scroll;
+        padding: 1em;
+    }
+
+    table {
+        /* Match the margin of <p>'s, which is 1em */
+        /* https://stackoverflow.com/a/819190/19411800 */
+        margin: 1em 0;
+
+        /* Magic :] <https://stackoverflow.com/a/59999352/19411800> */
+        border-collapse: collapse;
+
+        thead th {
+            border-bottom: solid 1px currentColor;
+        }
+
+        /* Margin makes no sense on inline table elements
+         * (so basically no margin collapse... shucks ;.;) */
+        th, td {
+            padding: 0 0.5em;
+        }
+    }
+}
+
+/*=============+
+ * Color scheme
+ *=============*/
+/* @media (prefers-color-scheme: light) { */
+    html, body {
+        background-color: #fff;
+        color: #111;
+    }
+
+    p.tagline {
+        /* Bootstrap "info" */
+        /*color: rgb(13, 202, 240);*/
+        /* (This doesn't pass WCAG AA standards for accessible text lmfao */
+        color: #c00;  /* My turn! >:p */
+        font-weight: bold;
+    }
+/* } */
+
+@media (prefers-color-scheme: dark) {
+    html, body {
+        background-color: #222;
+        color: #bbb;
+    }
+
+    b, strong, th, h1, h2, h3 {
+        color: #fff;
+        font-weight: normal;
+    }
+
+    a { color: #fc0; }
+    a:visited { color: #f60; }
+
+    p.tagline {
+        color: #0aa;  /* setaf 6 */
+        font-weight: normal;
+    }
+
+    blockquote.flathead pre {
+        background-color: #000;
+    }
+
+    blockquote.flathead table thead th {
+        border-bottom-color: #fff;
+    }
 }
