@@ -111,7 +111,7 @@ main.wide {
 }
 
 .epigram pre {
-    background-color: #333;
+    background-color: #ccc;
     /* I actually want to make it so that the padding
      * doesn't turn this pre-chunk into horizontal
      * scroll thingy, but that means doing something
@@ -263,6 +263,10 @@ blockquote.flathead {
 
     a { color: #fc0; }
     a:visited { color: #f60; }
+
+    .epigram pre {
+        background-color: #333;
+    }
 
     /* <em> exists purely for Lynx; no style implications for
      * GUI browsers.  (Unless you use light mode, in which case
