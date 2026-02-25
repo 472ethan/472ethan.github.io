@@ -95,7 +95,7 @@ echo $bad > $TMP/bad; )
 
 bad=$(cat $TMP/bad)
 if [ $bad -ne 0 ]; then
-	cat <<OHNO
+	cat <<OHNO >&2
 **** A total of $bad Nu check$([ $bad -eq 1 ] || echo s) failed.
 OHNO
 	no_unless_yes $bad "Would you like to continue?"
