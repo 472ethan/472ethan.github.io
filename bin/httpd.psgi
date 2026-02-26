@@ -469,10 +469,18 @@ sub copy_file ($into, $from, $start, $length)
     }
 }
 
+my %whitelist;
+
 sub NoNo_NastyPath ($app)
 {
     sub ($env) {
         my $path = $env->{"PATH_INFO"};
+
+        if ($whitelist{$path}) {
+            LOG ">>> NoNo:  You live another day @{[quote($path)]}...";
+            return $app->($env);
+        }
+
         if ($path =~ m@
         (
         ^$
@@ -528,6 +536,7 @@ unless (caller) {
         # HTTP-01 challenge webroot; -C for chdir/cd (as
         # found in tar(1) and make(1) (GNU+BSD) and git(1))
         'd|w|C|directory=s' => \my $directory,
+        'unban=s@' => \my @whitelist,
     );
 
     # For some reason :DEFAULT does not export inet_ntop? :^(
@@ -538,6 +547,8 @@ unless (caller) {
         catfile(dirname($FindBin::RealBin), 'public', 'html');
     $base_dir = File::Spec->rel2abs($base_dir);
     LOG "ROOT ", quote($base_dir);
+
+    %whitelist = map { $_ => 1 } @whitelist;
 
     require Plack::Runner;
     my $plackup;
