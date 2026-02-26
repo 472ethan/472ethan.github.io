@@ -533,13 +533,9 @@ unless (caller) {
     $host //= Socket::inet_ntop(AF_INET, INADDR_LOOPBACK);
     unshift @ARGV, "--host", $host;
 
-    if (defined $directory) {
-        $base_dir = $directory;
-    } else {
-        my $base_url = URI::file->new(dirname($FindBin::RealBin));
-        $base_dir = URI->new("$base_url/public/html")->dir;
-        defined $base_dir or die "BUG: URI round-trip failed?!!";
-    }
+    my $base_url = URI::file->new($directory // dirname($FindBin::RealBin));
+    $base_dir = URI->new("$base_url/public/html")->dir;
+    defined $base_dir or die "BUG: URI round-trip failed?!!";
 
     require Plack::Runner;
     my $plackup;
