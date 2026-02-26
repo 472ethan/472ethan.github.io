@@ -490,7 +490,7 @@ sub NoNo_NastyPath ($app)
         my $path = $env->{"PATH_INFO"};
 
         if ($whitelist{$path}) {
-            LOG ">>> NoNo:  You live another day @{[quote($path)]}...";
+            LOG " >>> NoNo:  You live another day @{[quote($path)]}...";
             return $app->($env);
         }
 
