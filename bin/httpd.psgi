@@ -208,13 +208,8 @@ EOM
     ], [ $body ] ];
 }
 
-# I don't want to import File::Spec :P
+# DEFINITION DEFERRED TO MAIN
 my $base_dir;
-BEGIN {
-    my $base_url = URI::file->new(dirname($FindBin::RealBin));
-    $base_dir = URI->new("$base_url/public/html")->dir;
-    defined $base_dir or die "BUG: URI round-trip failed?!!";
-}
 
 sub main ($env) {
     my $path = $env->{"PATH_INFO"};
@@ -527,11 +522,25 @@ unless (caller) {
     Getopt::Long::Configure(qw(gnu_compat pass_through));
     Getopt::Long::GetOptions(
         # -b is what I'm used to for python's http.server :,)
-        'b|o|host=s' => \my $host,
+        'b|o|bind|host=s' => \my $host,
+        # -d for a similar reason; -w for certbot certonly
+        # HTTP-01 challenge webroot; -C for chdir/cd (as
+        # found in tar(1) and make(1) (GNU+BSD) and git(1))
+        'd|w|C|directory=s' => \my $directory,
     );
+
     # For some reason :DEFAULT does not export inet_ntop? :^(
     $host //= Socket::inet_ntop(AF_INET, INADDR_LOOPBACK);
     unshift @ARGV, "--host", $host;
+
+    if (defined $directory) {
+        $base_dir = $directory;
+    } else {
+        my $base_url = URI::file->new(dirname($FindBin::RealBin));
+        $base_dir = URI->new("$base_url/public/html")->dir;
+        defined $base_dir or die "BUG: URI round-trip failed?!!";
+    }
+
     require Plack::Runner;
     my $plackup;
     $plackup = Plack::Runner->new;
