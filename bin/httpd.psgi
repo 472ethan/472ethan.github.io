@@ -1,4 +1,17 @@
 #!/usr/bin/env perl
+#
+# ethan> You can use this file under the same
+# conditions as its dependencies (Perl 5, Plack,
+# etc.)  You do not need to credit me for this
+# version since this is my school account, and
+# reminding people that I wrote this would let
+# people know how little sleep I've been having.
+#
+# ethan> In fact, you could just remove this
+# notice entirely if it gets in your way.  I
+# hate legalese, but I'd have to tell you that
+# in the first place somehow.
+#
 
 use v5.36;
 use utf8;
@@ -30,6 +43,7 @@ use Plack::Util;
 use Crypt::PRNG qw(random_bytes_b64u);
 
 use constant HTML_UNSAFE => "\000-\037&<>\177";
+use constant BUFSIZ => 8192;
 
 BEGIN {
     my $env = $ENV{'PLACK_ENV'} // 'development';
@@ -420,14 +434,13 @@ BD: {
         $boundary = random_bytes_b64u(52);
         my $danger = CRLF . $boundary . CRLF;
         my $span = length($danger);
-        my $bufsiz = 8192;
         foreach my $i (0 .. $#$off) {
             sysseek($fh, $off->[$i], SEEK_SET) or die "seek error: $!\n";
             my $last = '';
             my $proc = 0;
             my ($nr, $buf);
     RR:     while ((my $need = $len->[$i] - $proc) > 0) {
-                $need = $bufsiz if $bufsiz < $need;
+                $need = BUFSIZ if BUFSIZ < $need;
                 $nr = sysread($fh, $buf, $need) or last RR;
                 $proc += $nr;
                 if (index($last . $buf, $danger) != -1) {
@@ -459,7 +472,7 @@ sub copy_file ($into, $from, $start, $length)
     my $rem = $length;
     seek($from, $start, SEEK_SET) or die "seek error: $!";
     while ($rem > 0) {
-        $/ = \($rem > 8192 ? 8192 : $rem);
+        $/ = \($rem > BUFSIZ ? BUFSIZ : $rem);
         defined ($_ = readline($from)) or last;
         print $into $_;
         $rem -= length;
