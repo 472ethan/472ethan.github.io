@@ -10,6 +10,7 @@ use POSIX ();
 use Fcntl qw(:seek);
 use FindBin;
 use File::Basename;
+use File::Spec;
 use File::Temp 0.21;
 use URI;
 use URI::file;
@@ -533,7 +534,10 @@ unless (caller) {
     $host //= Socket::inet_ntop(AF_INET, INADDR_LOOPBACK);
     unshift @ARGV, "--host", $host;
 
-    my $base_url = URI::file->new($directory // dirname($FindBin::RealBin));
+    $directory = defined $directory
+        ? File::Spec->rel2abs($directory)
+        : dirname($FindBin::RealBin);
+    my $base_url = URI::file->new($directory);
     $base_dir = URI->new("$base_url/public/html")->dir;
     defined $base_dir or die "BUG: URI round-trip failed?!!";
 
