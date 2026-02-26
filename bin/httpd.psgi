@@ -534,12 +534,10 @@ unless (caller) {
     $host //= Socket::inet_ntop(AF_INET, INADDR_LOOPBACK);
     unshift @ARGV, "--host", $host;
 
-    $directory = defined $directory
-        ? File::Spec->rel2abs($directory)
-        : dirname($FindBin::RealBin);
-    my $base_url = URI::file->new($directory);
-    $base_dir = URI->new("$base_url/public/html")->dir;
-    defined $base_dir or die "BUG: URI round-trip failed?!!";
+    $base_dir = defined $directory ? $directory : File::Spec->
+        catfile(dirname($FindBin::RealBin), 'public', 'html');
+    $base_dir = File::Spec->rel2abs($base_dir);
+    LOG "ROOT ", quote($base_dir);
 
     require Plack::Runner;
     my $plackup;
